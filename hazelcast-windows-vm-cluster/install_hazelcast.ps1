@@ -11,3 +11,6 @@ choco install python -y
 New-Item -ItemType directory -Force -Path C:\Temp\hazelcast
 
 # copy hazelcast.xml and pom.xml into C:\Temp\hazelcast
+
+Copy-Item .\pom.xml -Destination C:\Temp\hazelcast
+Copy-Item .\hazelcast.xml -Destination C:\Temp\hazelcast
