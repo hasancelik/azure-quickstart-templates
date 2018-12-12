@@ -185,6 +185,10 @@
       "type": "Microsoft.Network/networkInterfaces",
       "name": "[concat(variables('nicName'), copyIndex(1))]",
       "location": "[parameters('location')]",
+      "copy": {
+        "name": "createNics",
+        "count": "[sub(parameters('instanceCount'), 1)]"
+      },
       "dependsOn": [
         "[concat('Microsoft.Network/virtualNetworks/', variables('virtualNetworkName'))]"
       ],
@@ -200,10 +204,6 @@
             }
           }
         ]
-      },
-      "copy": {
-        "name": "createNics",
-        "count": "[sub(parameters('instanceCount'), 1)]"
       }
     },
     {
@@ -253,6 +253,10 @@
       "type": "Microsoft.Compute/virtualMachines",
       "name": "[concat(variables('vmName'), copyIndex(1))]",
       "location": "[parameters('location')]",
+      "copy": {
+        "name": "createVms",
+        "count": "[sub(parameters('instanceCount'), 1)]"
+      },
       "dependsOn": [
         "[concat('Microsoft.Network/networkInterfaces/', variables('nicName'), copyIndex(1))]",
         "createNics"
@@ -289,24 +293,20 @@
             }
           ]
         }
-      },
-      "copy": {
-        "name": "createVms",
-        "count": "[sub(parameters('instanceCount'), 1)]"
       }
     },
     {
       "type": "Microsoft.Compute/virtualMachines/extensions",
       "name": "[concat(variables('vmName'), 0, '/initHazelcast')]",
-      "apiVersion": "2015-05-01-preview",
+      "apiVersion": "2018-06-01",
       "location": "[parameters('location')]",
       "dependsOn": [
         "[concat('Microsoft.Compute/virtualMachines/', variables('vmName'), '0')]"
       ],
       "properties": {
-        "publisher": "Microsoft.Azure.Extensions",
-        "type": "CustomScript",
-        "typeHandlerVersion": "2.0",
+        "publisher": "Microsoft.Compute",
+        "type": "CustomScriptExtension",
+        "typeHandlerVersion": "1.9",
         "autoUpgradeMinorVersion": true,
         "settings": {
           "fileUris": "[variables('bootstrapFiles')]",
@@ -317,24 +317,24 @@
     {
       "type": "Microsoft.Compute/virtualMachines/extensions",
       "name": "[concat(variables('vmName'), copyIndex(1),'/initHazelcast')]",
-      "apiVersion": "2015-05-01-preview",
+      "apiVersion": "2018-06-01",
       "location": "[parameters('location')]",
+      "copy": {
+        "name": "createExtensions",
+        "count": "[sub(parameters('instanceCount'), 1)]"
+      },
       "dependsOn": [
         "createVms"
       ],
       "properties": {
-        "publisher": "Microsoft.Azure.Extensions",
-        "type": "CustomScript",
-        "typeHandlerVersion": "2.0",
+        "publisher": "Microsoft.Compute",
+        "type": "CustomScriptExtension",
+        "typeHandlerVersion": "1.9",
         "autoUpgradeMinorVersion": true,
         "settings": {
           "fileUris": "[variables('bootstrapFiles')]",
           "commandToExecute": "[concat('powershell -ExecutionPolicy Unrestricted -File bootstrap_hazelcast.ps1 ', variables('scriptParameters'))]"
         }
-      },
-      "copy": {
-        "name": "createExtensions",
-        "count": "[sub(parameters('instanceCount'), 1)]"
       }
     }
   ]
