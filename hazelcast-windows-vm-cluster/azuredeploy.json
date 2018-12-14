@@ -2,358 +2,354 @@
   "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
   "contentVersion": "1.0.0.0",
   "parameters": {
-    "adminUsername": {
+      "adminUsername": {
           "type": "String",
-      "metadata": {
-        "description": "Username for hazelcast VMs"
-      }
-    },
-    "adminPassword": {
+          "metadata": {
+              "description": "Username for hazelcast VMs"
+          }
+      },
+      "adminPassword": {
           "type": "SecureString",
-      "metadata": {
-        "description": "Password for hazelcast VMs"
-      }
-    },
-    "clusterName": {
+          "metadata": {
+              "description": "Password for hazelcast VMs"
+          }
+      },
+      "clusterName": {
           "defaultValue": "[parameters('adminUsername')]",
           "type": "String",
-      "metadata": {
-        "description": "Username for hazelcast grid"
+          "metadata": {
+              "description": "Username for hazelcast grid"
           }
       },
-    "clusterPassword": {
+      "clusterPassword": {
           "type": "String",
-      "metadata": {
-        "description": "Password for hazelcast grid"
-      }
-    },
-    "dnsPrefix": {
+          "metadata": {
+              "description": "Password for hazelcast grid"
+          }
+      },
+      "dnsPrefix": {
           "type": "String",
-      "metadata": {
-        "description": "Unique DNS Name for the Public IP used to access the Virtual Machine."
-      }
-    },
-    "instanceCount": {
+          "metadata": {
+              "description": "Unique DNS Name for the Public IP used to access the Virtual Machine."
+          }
+      },
+      "instanceCount": {
           "type": "Int",
-      "metadata": {
-        "description": "The number of hazelcast nodes in the grid"
-      }
-    },
-    "clusterTag": {
+          "metadata": {
+              "description": "The number of hazelcast nodes in the grid"
+          }
+      },
+      "clusterTag": {
           "type": "String",
-      "metadata": {
-        "description": "The tag used to identify this cluster"
-      }
-    },
-    "clusterPort": {
+          "metadata": {
+              "description": "The tag used to identify this cluster"
+          }
+      },
+      "clusterPort": {
           "type": "String",
-      "metadata": {
-        "description": "The cluster port to identify this cluster"
-      }
-    },
-    "aadClientId": {
+          "metadata": {
+              "description": "The cluster port to identify this cluster"
+          }
+      },
+      "aadClientId": {
           "type": "String",
-      "metadata": {
-        "description": "Azure Active Directory Service Principal client ID"
-      }
-    },
-    "aadClientSecret": {
+          "metadata": {
+              "description": "Azure Active Directory Service Principal client ID"
+          }
+      },
+      "aadClientSecret": {
           "type": "String",
-      "metadata": {
-        "description": "Azure Active Directory Service Principal client secret"
-      }
-    },
-    "aadTenantId": {
+          "metadata": {
+              "description": "Azure Active Directory Service Principal client secret"
+          }
+      },
+      "aadTenantId": {
           "type": "String",
-      "metadata": {
-        "description": "Azure Active Directory Service Principal tenant ID"
-      }
-    },
-    "vmSize": {
+          "metadata": {
+              "description": "Azure Active Directory Service Principal tenant ID"
+          }
+      },
+      "vmSize": {
           "defaultValue": "Standard_DS2",
           "type": "String",
-      "metadata": {
-        "description": "The size of each instance VM"
+          "metadata": {
+              "description": "The size of each instance VM"
           }
       },
-    "windowsOSVersion": {
-      "defaultValue": "2016-Datacenter",
+      "windowsOSVersion": {
+          "defaultValue": "2016-Datacenter",
           "type": "String",
-      "metadata": {
-          "description": "The Windows version for the VM. This will pick a fully patched image of this given Windows version."
-      }
-    },
-    "templateBaseUrl": {
-      "defaultValue": "https://raw.githubusercontent.com/hasancelik/azure-quickstart-templates/hazelcast-windows-vm-cluster/hazelcast-windows-vm-cluster/",
+          "metadata": {
+              "description": "The Windows version for the VM. This will pick a fully patched image of this given Windows version."
+          }
+      },
+      "templateBaseUrl": {
+          "defaultValue": "https://raw.githubusercontent.com/hasancelik/azure-quickstart-templates/hazelcast-windows-vm-cluster/hazelcast-windows-vm-cluster/",
           "type": "String",
-      "metadata": {
-        "description": "The base URL for the bootstrap files"
-      }
-    },
-    "location": {
-      "defaultValue": "[resourceGroup().location]",
+          "metadata": {
+              "description": "The base URL for the bootstrap files"
+          }
+      },
+      "location": {
+          "defaultValue": "[resourceGroup().location]",
           "type": "String",
-      "metadata": {
-        "description": "Location for all resources."
+          "metadata": {
+              "description": "Location for all resources."
+          }
       }
-    }
   },
   "variables": {
-    "imagePublisher": "MicrosoftWindowsServer",
-    "imageOffer": "WindowsServer",
-    "nicName": "myVMNic",
-    "addressPrefix": "10.0.0.0/16",
-    "subnetName": "Subnet",
-    "subnetPrefix": "10.0.1.0/24",
-    "storageAccountType": "Standard_LRS",
-    "publicIPAddressName": "hazelcast0PubIp",
-    "publicIPAddressType": "Dynamic",
-    "vmName": "hazelcast",
-    "virtualNetworkName": "hazelcastVNet",
-    "subnetRef": "[resourceId('Microsoft.Network/virtualNetworks/subnets', variables('virtualNetworkName'), variables('subnetName'))]",
-    "scriptParameters": "[concat('-clusterName ', parameters('clusterName'), ' -clusterPassword ', parameters('clusterPassword'), ' -subscriptionId ', subscription().subscriptionId, ' -aadClientId ', parameters('aadClientId'), ' -aadClientSecret ', parameters('aadClientSecret'), ' -aadTenantId ', parameters('aadTenantId'), ' -groupName ', resourceGroup().name, ' -clusterTag ', parameters('clusterTag'))]",
-    "bootstrapFiles": [
-      "[concat(parameters('templateBaseUrl'), 'bootstrap_hazelcast.ps1')]",
-      "[concat(parameters('templateBaseUrl'), 'hazelcast.xml')]",
-      "[concat(parameters('templateBaseUrl'), 'install_hazelcast.ps1')]",
-      "[concat(parameters('templateBaseUrl'), 'modify_configuration')]",
-      "[concat(parameters('templateBaseUrl'), 'pom.xml')]"
-    ]
+      "imagePublisher": "MicrosoftWindowsServer",
+      "imageOffer": "WindowsServer",
+      "nicName": "myVMNic",
+      "addressPrefix": "10.0.0.0/16",
+      "subnetName": "Subnet",
+      "subnetPrefix": "10.0.1.0/24",
+      "storageAccountType": "Standard_LRS",
+      "publicIPAddressName": "hazelcast0PubIp",
+      "publicIPAddressType": "Dynamic",
+      "vmName": "hazelcast",
+      "virtualNetworkName": "hazelcastVNet",
+      "subnetRef": "[resourceId('Microsoft.Network/virtualNetworks/subnets', variables('virtualNetworkName'), variables('subnetName'))]",
+      "scriptParameters": "[concat('-clusterName ', parameters('clusterName'), ' -clusterPassword ', parameters('clusterPassword'), ' -subscriptionId ', subscription().subscriptionId, ' -aadClientId ', parameters('aadClientId'), ' -aadClientSecret ', parameters('aadClientSecret'), ' -aadTenantId ', parameters('aadTenantId'), ' -groupName ', resourceGroup().name, ' -clusterTag ', parameters('clusterTag'))]",
+      "bootstrapFiles": [
+          "[concat(parameters('templateBaseUrl'), 'bootstrap_hazelcast.ps1')]",
+          "[concat(parameters('templateBaseUrl'), 'hazelcast.xml')]",
+          "[concat(parameters('templateBaseUrl'), 'install_hazelcast.ps1')]",
+          "[concat(parameters('templateBaseUrl'), 'modify_configuration.py')]",
+          "[concat(parameters('templateBaseUrl'), 'pom.xml')]"
+      ]
   },
   "resources": [
-    {
-      "type": "Microsoft.Network/publicIPAddresses",
-      "name": "[variables('publicIPAddressName')]",
+      {
+          "type": "Microsoft.Network/publicIPAddresses",
+          "name": "[variables('publicIPAddressName')]",
           "apiVersion": "2015-05-01-preview",
-      "location": "[parameters('location')]",
-      "properties": {
-        "publicIPAllocationMethod": "[variables('publicIPAddressType')]",
-        "dnsSettings": {
-          "domainNameLabel": "[parameters('dnsPrefix')]"
-        }
-      }
-    },
-    {
-      "type": "Microsoft.Network/virtualNetworks",
-      "name": "[variables('virtualNetworkName')]",
-          "apiVersion": "2015-05-01-preview",
-      "location": "[parameters('location')]",
-      "properties": {
-        "addressSpace": {
-          "addressPrefixes": [
-            "[variables('addressPrefix')]"
-          ]
-        },
-        "subnets": [
-          {
-            "name": "[variables('subnetName')]",
-            "properties": {
-              "addressPrefix": "[variables('subnetPrefix')]"
-            }
-          }
-        ]
-      }
-    },
-    {
-      "type": "Microsoft.Network/networkInterfaces",
-      "name": "[concat(variables('nicName'), '0')]",
-          "apiVersion": "2015-05-01-preview",
-      "location": "[parameters('location')]",
-      "properties": {
-        "ipConfigurations": [
-          {
-            "name": "ipconfig1",
-            "properties": {
-              "privateIPAllocationMethod": "Dynamic",
-              "publicIPAddress": {
-                "id": "[resourceId('Microsoft.Network/publicIPAddresses',variables('publicIPAddressName'))]"
-              },
-              "subnet": {
-                "id": "[variables('subnetRef')]"
+          "location": "[parameters('location')]",
+          "properties": {
+              "publicIPAllocationMethod": "[variables('publicIPAddressType')]",
+              "dnsSettings": {
+                  "domainNameLabel": "[parameters('dnsPrefix')]"
               }
-            }
           }
-        ]
+      },
+      {
+          "type": "Microsoft.Network/virtualNetworks",
+          "name": "[variables('virtualNetworkName')]",
+          "apiVersion": "2015-05-01-preview",
+          "location": "[parameters('location')]",
+          "properties": {
+              "addressSpace": {
+                  "addressPrefixes": [
+                      "[variables('addressPrefix')]"
+                  ]
+              },
+              "subnets": [
+                  {
+                      "name": "[variables('subnetName')]",
+                      "properties": {
+                          "addressPrefix": "[variables('subnetPrefix')]"
+                      }
+                  }
+              ]
+          }
+      },
+      {
+          "type": "Microsoft.Network/networkInterfaces",
+          "name": "[concat(variables('nicName'), '0')]",
+          "apiVersion": "2015-05-01-preview",
+          "location": "[parameters('location')]",
+          "properties": {
+              "ipConfigurations": [
+                  {
+                      "name": "ipconfig1",
+                      "properties": {
+                          "privateIPAllocationMethod": "Dynamic",
+                          "publicIPAddress": {
+                              "id": "[resourceId('Microsoft.Network/publicIPAddresses',variables('publicIPAddressName'))]"
+                          },
+                          "subnet": {
+                              "id": "[variables('subnetRef')]"
+                          }
+                      }
+                  }
+              ]
           },
           "dependsOn": [
               "[concat('Microsoft.Network/publicIPAddresses/', variables('publicIPAddressName'))]",
               "[concat('Microsoft.Network/virtualNetworks/', variables('virtualNetworkName'))]"
           ]
-    },
-    {
-      "type": "Microsoft.Network/networkInterfaces",
-      "name": "[concat(variables('nicName'), copyIndex(1))]",
-          "apiVersion": "2015-05-01-preview",
-      "location": "[parameters('location')]",
-      "copy": {
-        "name": "createNics",
-        "count": "[sub(parameters('instanceCount'), 1)]"
       },
-      "properties": {
-        "ipConfigurations": [
-          {
-            "name": "ipconfig1",
-            "properties": {
-              "privateIPAllocationMethod": "Dynamic",
-              "subnet": {
-                "id": "[variables('subnetRef')]"
-              }
-            }
-          }
-        ]
-    },
+      {
+          "type": "Microsoft.Network/networkInterfaces",
+          "name": "[concat(variables('nicName'), copyIndex(1))]",
+          "apiVersion": "2015-05-01-preview",
+          "location": "[parameters('location')]",
+          "copy": {
+              "name": "createNics",
+              "count": "[sub(parameters('instanceCount'), 1)]"
+          },
+          "properties": {
+              "ipConfigurations": [
+                  {
+                      "name": "ipconfig1",
+                      "properties": {
+                          "privateIPAllocationMethod": "Dynamic",
+                          "subnet": {
+                              "id": "[variables('subnetRef')]"
+                          }
+                      }
+                  }
+              ]
+          },
           "dependsOn": [
               "[concat('Microsoft.Network/virtualNetworks/', variables('virtualNetworkName'))]"
           ]
       },
-    {
-      "type": "Microsoft.Compute/virtualMachines",
-      "name": "[concat(variables('vmName'), '0')]",
+      {
+          "type": "Microsoft.Compute/virtualMachines",
+          "name": "[concat(variables('vmName'), '0')]",
           "apiVersion": "2017-03-30",
-      "location": "[parameters('location')]",
-      "tags": {
-        "[parameters('clusterTag')]": "[parameters('clusterPort')]"
-      },
-      "properties": {
-        "hardwareProfile": {
-          "vmSize": "[parameters('vmSize')]"
-        },
-        "osProfile": {
-          "adminPassword": "[parameters('adminPassword')]",
-          "adminUsername": "[parameters('adminUsername')]",
-          "computerName": "[variables('vmName')]"
-        },
-        "storageProfile": {
-          "imageReference": {
-            "publisher": "[variables('imagePublisher')]",
-            "offer": "[variables('imageOffer')]",
-            "sku": "[parameters('windowsOSVersion')]",
-            "version": "latest"
+          "location": "[parameters('location')]",
+          "tags": {
+              "[parameters('clusterTag')]": "[parameters('clusterPort')]"
           },
-          "osDisk": {
-            "name": "[concat(variables('vmName'), '0','_OSDisk')]",
-            "caching": "ReadWrite",
-            "createOption": "FromImage"
-          }
-        },
-        "networkProfile": {
-          "networkInterfaces": [
-            {
-              "id": "[resourceId('Microsoft.Network/networkInterfaces',concat(variables('nicName'), '0'))]"
-            }
-          ]
-        }
-    },
+          "properties": {
+              "hardwareProfile": {
+                  "vmSize": "[parameters('vmSize')]"
+              },
+              "osProfile": {
+                  "adminPassword": "[parameters('adminPassword')]",
+                  "adminUsername": "[parameters('adminUsername')]",
+                  "computerName": "[variables('vmName')]"
+              },
+              "storageProfile": {
+                  "imageReference": {
+                      "publisher": "[variables('imagePublisher')]",
+                      "offer": "[variables('imageOffer')]",
+                      "sku": "[parameters('windowsOSVersion')]",
+                      "version": "latest"
+                  },
+                  "osDisk": {
+                      "name": "[concat(variables('vmName'), '0','_OSDisk')]",
+                      "caching": "ReadWrite",
+                      "createOption": "FromImage"
+                  }
+              },
+              "networkProfile": {
+                  "networkInterfaces": [
+                      {
+                          "id": "[resourceId('Microsoft.Network/networkInterfaces',concat(variables('nicName'), '0'))]"
+                      }
+                  ]
+              }
+          },
           "dependsOn": [
               "[concat('Microsoft.Network/networkInterfaces/', variables('nicName'), '0')]"
           ]
       },
-    {
-      "type": "Microsoft.Compute/virtualMachines",
-      "name": "[concat(variables('vmName'), copyIndex(1))]",
+      {
+          "type": "Microsoft.Compute/virtualMachines",
+          "name": "[concat(variables('vmName'), copyIndex(1))]",
           "apiVersion": "2017-03-30",
-      "location": "[parameters('location')]",
-      "copy": {
-        "name": "createVms",
-        "count": "[sub(parameters('instanceCount'), 1)]"
-      },
-      "tags": {
-        "[parameters('clusterTag')]": "[parameters('clusterPort')]"
-      },
-      "properties": {
-        "hardwareProfile": {
-          "vmSize": "[parameters('vmSize')]"
-        },
-        "osProfile": {
-          "adminPassword": "[parameters('adminPassword')]",
-          "adminUsername": "[parameters('adminUsername')]",
-          "computerName": "[variables('vmName')]"
-        },
-        "storageProfile": {
-          "imageReference": {
-            "publisher": "[variables('imagePublisher')]",
-            "offer": "[variables('imageOffer')]",
-            "sku": "[parameters('windowsOSVersion')]",
-            "version": "latest"
+          "location": "[parameters('location')]",
+          "copy": {
+              "name": "createVms",
+              "count": "[sub(parameters('instanceCount'), 1)]"
           },
-          "osDisk": {
-            "name": "[concat(variables('vmName'), copyIndex(1),'_OSDisk')]",
-            "caching": "ReadWrite",
-            "createOption": "FromImage"
-          }
-        },
-        "networkProfile": {
-          "networkInterfaces": [
-            {
-              "id": "[resourceId('Microsoft.Network/networkInterfaces', concat(variables('nicName'), copyIndex(1)))]"
-            }
-          ]
-        }
-    },
+          "tags": {
+              "[parameters('clusterTag')]": "[parameters('clusterPort')]"
+          },
+          "properties": {
+              "hardwareProfile": {
+                  "vmSize": "[parameters('vmSize')]"
+              },
+              "osProfile": {
+                  "adminPassword": "[parameters('adminPassword')]",
+                  "adminUsername": "[parameters('adminUsername')]",
+                  "computerName": "[variables('vmName')]"
+              },
+              "storageProfile": {
+                  "imageReference": {
+                      "publisher": "[variables('imagePublisher')]",
+                      "offer": "[variables('imageOffer')]",
+                      "sku": "[parameters('windowsOSVersion')]",
+                      "version": "latest"
+                  },
+                  "osDisk": {
+                      "name": "[concat(variables('vmName'), copyIndex(1),'_OSDisk')]",
+                      "caching": "ReadWrite",
+                      "createOption": "FromImage"
+                  }
+              },
+              "networkProfile": {
+                  "networkInterfaces": [
+                      {
+                          "id": "[resourceId('Microsoft.Network/networkInterfaces', concat(variables('nicName'), copyIndex(1)))]"
+                      }
+                  ]
+              }
+          },
           "dependsOn": [
               "[concat('Microsoft.Network/networkInterfaces/', variables('nicName'), copyIndex(1))]",
               "createNics"
           ]
       },
-    {
-      "type": "Microsoft.Compute/virtualMachines/extensions",
-      "name": "[concat(variables('vmName'), 0, '/initHazelcast')]",
-      "apiVersion": "2018-06-01",
-      "location": "[parameters('location')]",
-      "properties": {
-        "publisher": "Microsoft.Compute",
-        "type": "CustomScriptExtension",
-        "typeHandlerVersion": "1.9",
-        "autoUpgradeMinorVersion": true,
-        "settings": {
-          "fileUris": "[variables('bootstrapFiles')]",
-                  "commandToExecute": "[concat('powershell -ExecutionPolicy Unrestricted -File ./bootstrap_hazelcast.ps1 ', variables('scriptParameters'), ' | Out-File -FilePath C:/Temp/hazelcast/bootstrap.log')]"
-        }
+      {
+          "type": "Microsoft.Compute/virtualMachines/extensions",
+          "name": "[concat(variables('vmName'), 0, '/initHazelcast')]",
+          "apiVersion": "2018-06-01",
+          "location": "[parameters('location')]",
+          "properties": {
+              "publisher": "Microsoft.Compute",
+              "type": "CustomScriptExtension",
+              "typeHandlerVersion": "1.9",
+              "autoUpgradeMinorVersion": true,
+              "settings": {
+                  "fileUris": "[variables('bootstrapFiles')]",
+                  "commandToExecute": "[concat('powershell -ExecutionPolicy Unrestricted -File bootstrap_hazelcast.ps1 ', variables('scriptParameters'))]"
+              }
           },
           "dependsOn": [
               "[concat('Microsoft.Compute/virtualMachines/', variables('vmName'), '0')]"
           ]
-    },
-    {
-      "type": "Microsoft.Compute/virtualMachines/extensions",
-      "name": "[concat(variables('vmName'), copyIndex(1),'/initHazelcast')]",
-      "apiVersion": "2018-06-01",
-      "location": "[parameters('location')]",
-      "copy": {
-        "name": "createExtensions",
-        "count": "[sub(parameters('instanceCount'), 1)]"
       },
-      "properties": {
-        "publisher": "Microsoft.Compute",
-        "type": "CustomScriptExtension",
-        "typeHandlerVersion": "1.9",
-        "autoUpgradeMinorVersion": true,
-        "settings": {
-          "fileUris": "[variables('bootstrapFiles')]",
-                  "commandToExecute": "[concat('powershell -ExecutionPolicy Unrestricted -File ./bootstrap_hazelcast.ps1 ', variables('scriptParameters'), ' | Out-File -FilePath C:/Temp/hazelcast/bootstrap.log')]"
+      {
+          "type": "Microsoft.Compute/virtualMachines/extensions",
+          "name": "[concat(variables('vmName'), copyIndex(1),'/initHazelcast')]",
+          "apiVersion": "2018-06-01",
+          "location": "[parameters('location')]",
+          "copy": {
+              "name": "createExtensions",
+              "count": "[sub(parameters('instanceCount'), 1)]"
+          },
+          "properties": {
+              "publisher": "Microsoft.Compute",
+              "type": "CustomScriptExtension",
+              "typeHandlerVersion": "1.9",
+              "autoUpgradeMinorVersion": true,
+              "settings": {
+                  "fileUris": "[variables('bootstrapFiles')]",
+                  "commandToExecute": "[concat('powershell -ExecutionPolicy Unrestricted -File bootstrap_hazelcast.ps1 ', variables('scriptParameters'))]"
               }
           },
           "dependsOn": [
               "createVms"
           ]
-        }
+      }
   ],
   "outputs": {
       "scriptParameters": {
-          "type": "string",
+          "type": "String",
           "value": "[variables('scriptParameters')]"
       },
-      "bootstrapFiles": {
-        "type": "array",
-        "value": "[variables('bootstrapFiles')]"
-      },
-      "psCommand": {
-          "type": "string",
-          "value": "[concat('powershell -ExecutionPolicy Unrestricted -File bootstrap_hazelcast.ps1 ', variables('scriptParameters'))]"
-      },
       "location": {
+          "type": "String",
+          "value": "[parameters('location')]"
+      },
+      "commandExecute": {
         "type": "string",
-        "value": "[parameters('location')]"
+        "value":"[concat('powershell -ExecutionPolicy Unrestricted -File bootstrap_hazelcast.ps1 ', variables('scriptParameters'), ' | Out-File -FilePath C:/bootstrap.log')]"
       }
     }
 }
