@@ -1,4 +1,3 @@
-#! /usr/bin/python
 from _io import open
 from xml import dom
 from xml import sax

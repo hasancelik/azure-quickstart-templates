@@ -16,4 +16,4 @@ Copy-Item .\pom.xml -Destination C:\Temp\hazelcast
 Copy-Item .\hazelcast.xml -Destination C:\Temp\hazelcast
 
 Copy-Item .\bootstrap_hazelcast.ps1 -Destination C:\Temp\hazelcast
-Copy-Item .\modify_configuration -Destination C:\Temp\hazelcast
+Copy-Item .\modify_configuration.py -Destination C:\Temp\hazelcast
