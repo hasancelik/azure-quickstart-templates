@@ -9,9 +9,9 @@ param (
     [string]$clusterTag
 )
 
-$python = "C:\Python37\python.exe"
-
 .\install_hazelcast.ps1
+
+$python = "C:\Python37\python.exe"
 refreshenv
 
 $python -V
