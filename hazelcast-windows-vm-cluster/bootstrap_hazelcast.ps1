@@ -9,15 +9,15 @@ param (
     [string]$clusterTag
 )
 
-.\install_hazelcast.ps1
+& .\install_hazelcast.ps1
 
 $python = "C:\Python37\python.exe"
+$mvn = "C:\ProgramData\chocolatey\bin\mvn.exe"
 refreshenv
+& $python -V
+& $mvn -version
 
-$python -V
-$python .\modify_configuration.py --cluster-name=$clusterName --cluster-password=$clusterPassword --subscription-id=$subscriptionId --aad-client-id=$aadClientId --aad-client-secret=$aadClientSecret --tenant-id=$aadTenantId --group-name=$groupName --cluster-tag=$clusterTag --filename=.\hazelcast.xml | Out-File -FilePath C:\modify.log
-
+& $python .\modify_configuration.py --cluster-name=$clusterName --cluster-password=$clusterPassword --subscription-id=$subscriptionId --aad-client-id=$aadClientId --aad-client-secret=$aadClientSecret --tenant-id=$aadTenantId --group-name=$groupName --cluster-tag=$clusterTag --filename=.\hazelcast.xml | Out-File -FilePath C:\modify.log
 Copy-Item .\hazelcast.xml -Destination C:\Temp\hazelcast
 
-mvn -version
-mvn exec:java -f C:\Temp\hazelcast\pom.xml | Out-File -FilePath C:\maven.log
+& $mvn exec:java -f C:\Temp\hazelcast\pom.xml | Out-File -FilePath C:\maven.log
