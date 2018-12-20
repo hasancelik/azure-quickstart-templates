@@ -12,9 +12,11 @@ param (
 & .\install_hazelcast.ps1
 
 $python = "C:\Python37\python.exe"
+$java = "C:\Program Files\Java\jdk1.8.0_191\bin\java.exe"
 $mvn = "C:\ProgramData\chocolatey\bin\mvn.exe"
 refreshenv
 & $python -V
+& $java -version
 & $mvn --version | Out-File -FilePath C:\maven-version.log
 
 & $python .\modify_configuration.py --cluster-name=$clusterName --cluster-password=$clusterPassword --subscription-id=$subscriptionId --aad-client-id=$aadClientId --aad-client-secret=$aadClientSecret --tenant-id=$aadTenantId --group-name=$groupName --cluster-tag=$clusterTag --filename=.\hazelcast.xml | Out-File -FilePath C:\modify.log
