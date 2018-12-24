@@ -14,5 +14,8 @@ refreshenv
 
 New-Item -ItemType directory -Force -Path C:\Temp\hazelcast
 
-# copy and pom.xml into C:\Temp\hazelcast
+python -V
+python .\modify_configuration.py --cluster-name=$clusterName --cluster-password=$clusterPassword --subscription-id=$subscriptionId --aad-client-id=$aadClientId --aad-client-secret=$aadClientSecret --tenant-id=$aadTenantId --group-name=$groupName --cluster-tag=$clusterTag --filename=.\hazelcast.xml
+
+Copy-Item .\hazelcast.xml -Destination C:\Temp\hazelcast
 Copy-Item .\pom.xml -Destination C:\Temp\hazelcast
