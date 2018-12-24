@@ -9,15 +9,31 @@ param (
     [string]$clusterTag
 )
 
-& .\install_hazelcast.ps1
+. .\install_hazelcast.ps1
+refreshenv
 
 $python = 'C:\Python37\python.exe'
+& $python -V
+
 $java = 'C:\Program Files\Java\jdk1.8.0_191\bin\java.exe'
 $mvn = 'C:\ProgramData\chocolatey\bin\mvn.exe'
-refreshenv
-& $mvn --version
-& $python -V
+Write-Host "Phase 1"
 & $java -version
+& $mvn --version
+Write-Host "Phase 2"
+& 'C:\Program Files\Java\jdk1.8.0_191\bin\java.exe' -version
+& 'C:\ProgramData\chocolatey\bin\mvn.exe' --version
+Write-Host "Phase 3"
+& 'java.exe' -version
+& 'mvn.exe' --version
+Write-Host "Phases are completed"
+
+Get-Command java | Select-Object Version
+Get-Command java | Select-Object Source
+Get-Command mvn | Select-Object Version
+Get-Command mvn | Select-Object Source
+Get-Command python | Select-Object Version
+Get-Command python | Select-Object Source
 
 & $python .\modify_configuration.py --cluster-name=$clusterName --cluster-password=$clusterPassword --subscription-id=$subscriptionId --aad-client-id=$aadClientId --aad-client-secret=$aadClientSecret --tenant-id=$aadTenantId --group-name=$groupName --cluster-tag=$clusterTag --filename=.\hazelcast.xml | Out-File -FilePath C:\modify.log
 Copy-Item .\hazelcast.xml -Destination C:\Temp\hazelcast
