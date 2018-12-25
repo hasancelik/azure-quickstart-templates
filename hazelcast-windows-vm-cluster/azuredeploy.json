@@ -117,6 +117,7 @@
           "[concat(parameters('templateBaseUrl'), 'hazelcast.xml')]",
           "[concat(parameters('templateBaseUrl'), 'install_hazelcast.ps1')]",
           "[concat(parameters('templateBaseUrl'), 'modify_configuration.py')]",
+          "[concat(parameters('templateBaseUrl'), 'logging.properties')]",
           "[concat(parameters('templateBaseUrl'), 'pom.xml')]"
       ]
   },
@@ -307,7 +308,7 @@
               "autoUpgradeMinorVersion": true,
               "settings": {
                   "fileUris": "[variables('bootstrapFiles')]",
-                  "commandToExecute": "[concat('powershell -ExecutionPolicy Unrestricted -File bootstrap_hazelcast.ps1 ', variables('scriptParameters'))]"
+                  "commandToExecute": "[concat('powershell -ExecutionPolicy Unrestricted -File bootstrap_hazelcast.ps1 ', variables('scriptParameters'), ' > C:/bootstrap.log')]"
               }
           },
           "dependsOn": [
@@ -330,7 +331,7 @@
               "autoUpgradeMinorVersion": true,
               "settings": {
                   "fileUris": "[variables('bootstrapFiles')]",
-                  "commandToExecute": "[concat('powershell -ExecutionPolicy Unrestricted -File bootstrap_hazelcast.ps1 ', variables('scriptParameters'))]"
+                  "commandToExecute": "[concat('powershell -ExecutionPolicy Unrestricted -File bootstrap_hazelcast.ps1 ', variables('scriptParameters'), ' > C:/bootstrap.log')]"
               }
           },
           "dependsOn": [
@@ -346,10 +347,6 @@
       "location": {
           "type": "String",
           "value": "[parameters('location')]"
-      },
-      "commandExecute": {
-        "type": "string",
-        "value":"[concat('powershell -ExecutionPolicy Unrestricted -File bootstrap_hazelcast.ps1 ', variables('scriptParameters'), ' | Out-File -FilePath C:/bootstrap.log')]"
       }
     }
 }

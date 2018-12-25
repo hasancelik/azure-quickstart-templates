@@ -15,4 +15,10 @@ refreshenv
 java -version
 mvn --version
 
-mvn exec:java --file "C:\Temp\hazelcast\pom.xml"
+$mvnbuild = "C:\ProgramData\chocolatey\bin\mvn.exe"
+$mvnargs = "exec:java --file C:\Temp\hazelcast\pom.xml"
+
+$proc1 = Start-Process -FilePath $mvnbuild -ArgumentList $mvnargs  -RedirectStandardOutput "C:\Temp\hazelcast\hazelcast.log" -RedirectStandardError " C:\Temp\hazelcast\hazelcast-error.log" -Wait -PassThru
+$proc1.waitForExit()
+
+Write-Out "Finished"
