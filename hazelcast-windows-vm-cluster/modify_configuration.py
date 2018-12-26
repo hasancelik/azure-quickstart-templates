@@ -1,10 +1,5 @@
-from _io import open
-from xml import dom
-from xml import sax
-from xml import *
 from xml.etree.ElementTree import QName
 import xml.etree.cElementTree as ET
-import optparse
 from optparse import OptionParser
 import sys
 
@@ -21,6 +16,7 @@ if __name__ == "__main__":
     parser.add_option("-c","--aad-client-secret",dest="aad_client_secret")
     parser.add_option("-g","--group-name",dest="group_name")
     parser.add_option("-l","--cluster-tag",dest="cluster_tag")
+    parser.add_option("-k","--cluster-port",dest="cluster_port")
     parser.add_option("-f","--filename",dest="filename")
     if len(sys.argv) > 0:
         opts,args = parser.parse_args(sys.argv)
@@ -40,6 +36,10 @@ if __name__ == "__main__":
                 group.find("hazelcast_ns:name", ns).text = opts.cluster_name
                 group.find("hazelcast_ns:password", ns).text = opts.cluster_password
             print("Updated cluster user name and password...")
+
+            for network in root.iter(str(QName(hazelcast_ns, "network"))):
+                network.find("hazelcast_ns:port", ns).text = opts.cluster_port
+            print("Updated cluster port...")
 
             ## Updating discovery stategy
             print("Updating discovery strategy nodes...")
