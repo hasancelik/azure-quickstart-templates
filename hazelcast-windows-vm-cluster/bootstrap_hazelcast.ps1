@@ -12,13 +12,8 @@ param (
 . .\install_hazelcast.ps1
 refreshenv
 
-java -version
-mvn --version
-
 $mvnbuild = "C:\ProgramData\chocolatey\bin\mvn.exe"
 $mvnargs = "exec:java --file C:\Temp\hazelcast\pom.xml"
+$hazelcasttemp = "C:\Temp\hazelcast"
 
-$proc1 = Start-Process -FilePath $mvnbuild -ArgumentList $mvnargs  -RedirectStandardOutput "C:\Temp\hazelcast\hazelcast.log" -RedirectStandardError " C:\Temp\hazelcast\hazelcast-error.log" -Wait -PassThru
-$proc1.waitForExit()
-
-Write-Out "Finished"
+Start-Process -FilePath $mvnbuild -ArgumentList $mvnargs  -RedirectStandardOutput "$hazelcasttemp\hazelcast-standard.txt" -RedirectStandardError "$hazelcasttemp\hazelcast-error.txt" -NoNewWindow -PassThru
