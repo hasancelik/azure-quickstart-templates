@@ -7,7 +7,7 @@ param (
     [string]$aadClientSecret,
     [string]$aadTenantId,
     [string]$groupName,
-    [string]$clusterTag
+    [string]$clusterTag,
     [string]$clusterPort
 )
 
