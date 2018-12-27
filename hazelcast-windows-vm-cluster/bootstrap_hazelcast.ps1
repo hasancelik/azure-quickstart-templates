@@ -23,4 +23,6 @@ $hazelcasttemp = "C:\Temp\hazelcast"
 
 # maven dowloads are very slow with Start-Process so download them before execution.
 mvn clean install --file "C:\Temp\hazelcast\pom.xml"
-Start-Process -FilePath $mvnbuild -ArgumentList $mvnargs  -RedirectStandardOutput "$hazelcasttemp\hazelcast-standard.txt" -RedirectStandardError "$hazelcasttemp\hazelcast-error.txt" -PassThru
+Start-Process -FilePath $mvnbuild -ArgumentList $mvnargs  -RedirectStandardOutput "$hazelcasttemp\hazelcast-standard.txt" -RedirectStandardError "$hazelcasttemp\hazelcast-member.txt" -PassThru
+
+exit 0
