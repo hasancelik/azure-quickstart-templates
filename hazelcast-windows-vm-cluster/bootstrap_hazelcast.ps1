@@ -21,4 +21,6 @@ $mvnbuild = "C:\ProgramData\chocolatey\bin\mvn.exe"
 $mvnargs = "exec:java --file C:\Temp\hazelcast\pom.xml"
 $hazelcasttemp = "C:\Temp\hazelcast"
 
-Start-Process -FilePath $mvnbuild -ArgumentList $mvnargs  -RedirectStandardOutput "$hazelcasttemp\hazelcast-standard.txt" -RedirectStandardError "$hazelcasttemp\hazelcast-error.txt" -NoNewWindow -PassThru
+# maven dowloads are very slow with Start-Process so download them before execution.
+mvn clean install --file "C:\Temp\hazelcast\pom.xml"
+Start-Process -FilePath $mvnbuild -ArgumentList $mvnargs  -RedirectStandardOutput "$hazelcasttemp\hazelcast-standard.txt" -RedirectStandardError "$hazelcasttemp\hazelcast-error.txt" -PassThru
