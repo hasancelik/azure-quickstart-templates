@@ -8,23 +8,26 @@
     "adminPassword": {
       "value": "GEN-PASSWORD"
     },
+    "hazelcastVersion": {
+      "value": "3.11"
+    },
     "clusterName": {
       "value": "HZLCST"
     },
-    "clusterPassword": {
-      "value": "GEN-PASSWORD"
+    "instanceCount": {
+      "value": 2
     },
     "clusterPort": {
       "value": "5701"
     },
-    "vmSize": {
-      "value": "Standard_DS1"
-    },
-    "instanceCount": {
-      "value": 3
-    },
     "dnsPrefix": {
       "value": "GEN-UNIQUE-10"
+    },
+    "vmSize": {
+      "value": "Standard_DS2"
+    },
+    "windowsOSVersion": {
+      "value": "2016-Datacenter"
     },
     "aadClientId": {
       "value": "GEN-UNIQUE"
