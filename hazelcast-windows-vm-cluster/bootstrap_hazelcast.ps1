@@ -1,6 +1,5 @@
 param (
     [string]$clusterName,
-    [string]$clusterPassword,
     [string]$hazelcastVersion,
     [string]$subscriptionId,
     [string]$aadClientId,

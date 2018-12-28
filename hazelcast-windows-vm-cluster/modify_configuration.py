@@ -9,7 +9,6 @@ if __name__ == "__main__":
 
     parser = OptionParser()
     parser.add_option("-n","--cluster-name",dest="cluster_name")
-    parser.add_option("-p","--cluster-password",dest="cluster_password")
     parser.add_option("-s","--subscription-id",dest="subscription_id")
     parser.add_option("-t","--tenant-id",dest="tenant_id")
     parser.add_option("-a","--aad-client-id",dest="aad_client_id")
@@ -34,8 +33,7 @@ if __name__ == "__main__":
             ## Finding and replacing the old group tag with the new one
             for group in root.iter(str(QName(hazelcast_ns, "group"))):
                 group.find("hazelcast_ns:name", ns).text = opts.cluster_name
-                group.find("hazelcast_ns:password", ns).text = opts.cluster_password
-            print("Updated cluster user name and password...")
+            print("Updated cluster user name...")
 
             for network in root.iter(str(QName(hazelcast_ns, "network"))):
                 network.find("hazelcast_ns:port", ns).text = opts.cluster_port
