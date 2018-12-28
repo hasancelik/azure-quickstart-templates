@@ -16,4 +16,6 @@ refreshenv
 # Openning the port of hazelcast member
 netsh advfirewall firewall add rule name="Hazelcast Member" dir=in action=allow protocol=TCP localport=$clusterPort
 
-$hazelcastjob = Start-Job -Name "Hazelcast" -ScriptBlock {Set-Location "C:\Temp\hazelcast"; mvn exec:java 2>&1 >> "C:\Temp\hazelcast\hazelcast-member.log"}
+Start-Job -Name "Hazelcast" -ScriptBlock {Set-Location "C:\Temp\hazelcast"; mvn exec:java}
+Start-Sleep -Seconds 300
+Receive-Job -Name "Hazelcast" 2>&1 >> "C:\Temp\hazelcast\hazelcast-member.log"

@@ -20,7 +20,6 @@ if __name__ == "__main__":
             root = tree.getroot()
 
             for dependency in root.iter(str(QName(pom_ns, "dependency"))):
-                print(dependency.find("pom_ns:version", ns).text)
                 if dependency.find("pom_ns:groupId", ns).text == "com.hazelcast" and dependency.find("pom_ns:artifactId", ns).text == "hazelcast":
                     dependency.find("pom_ns:version", ns).text = opts.hazelcast_version
             print("Updated hazelcast version at pom.xml...")
