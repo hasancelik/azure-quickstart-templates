@@ -7,7 +7,8 @@ param (
     [string]$aadTenantId,
     [string]$groupName,
     [string]$clusterTag,
-    [string]$clusterPort
+    [string]$clusterPort,
+    [string]$userPassword
 )
 
 . .\install_hazelcast.ps1
@@ -22,7 +23,7 @@ $action = New-ScheduledTaskAction -Execute 'Powershell.exe' -Argument '-Executio
 echo '1'
 $trigger =  New-ScheduledTaskTrigger -AtStartup
 echo '2'
-Register-ScheduledTask -Action $action -Trigger $trigger -TaskName "Hazelcast" -User $user -Description "Hazelcast Member" -RunLevel Highest
+Register-ScheduledTask -Action $action -Trigger $trigger -TaskName "Hazelcast" -User $user -Password $userPassword -Description "Hazelcast Member" -RunLevel Highest
 echo '3'
 Get-ScheduledTask -TaskName "Hazelcast"
 Start-ScheduledTask -TaskName "Hazelcast"
