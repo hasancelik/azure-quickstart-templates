@@ -16,9 +16,14 @@ refreshenv
 # Openning the port of hazelcast member
 netsh advfirewall firewall add rule name="Hazelcast Member" dir=in action=allow protocol=TCP localport=$clusterPort
 
+$user = [System.Security.Principal.WindowsIdentity]::GetCurrent().Name
+echo $user
 $action = New-ScheduledTaskAction -Execute 'Powershell.exe' -Argument '-ExecutionPolicy Unrestricted -Command "cd C:\Temp\hazelcast; mvn exec:java 2>&1 >> "C:\Temp\hazelcast\hazelcast-member.log""'
+echo '1'
 $trigger =  New-ScheduledTaskTrigger -AtStartup
-Register-ScheduledTask -Action $action -Trigger $trigger -TaskName "Hazelcast" -Description "Hazelcast Member" -RunLevel Highest
+echo '2'
+Register-ScheduledTask -Action $action -Trigger $trigger -TaskName "Hazelcast" -User $user -Description "Hazelcast Member" -RunLevel Highest
+echo '3'
 Get-ScheduledTask -TaskName "Hazelcast"
 Start-ScheduledTask -TaskName "Hazelcast"
 Start-Sleep -Seconds 300
