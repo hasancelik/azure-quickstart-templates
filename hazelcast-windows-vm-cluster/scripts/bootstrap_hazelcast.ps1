@@ -23,3 +23,5 @@ $trigger = New-ScheduledTaskTrigger -AtStartup
 Register-ScheduledTask -Action $action -Trigger $trigger -TaskName "Hazelcast" -User $user -Password $userPassword -Description "Hazelcast Member" -RunLevel Highest
 Get-ScheduledTask -TaskName "Hazelcast"
 Start-ScheduledTask -TaskName "Hazelcast"
+Start-Sleep -Seconds 60
+Get-ScheduledTask -TaskName "Hazelcast"
