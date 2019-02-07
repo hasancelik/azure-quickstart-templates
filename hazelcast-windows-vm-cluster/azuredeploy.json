@@ -134,7 +134,7 @@
       "vmName": "hazelcast",
       "virtualNetworkName": "hazelcastVNet",
       "subnetRef": "[resourceId('Microsoft.Network/virtualNetworks/subnets', variables('virtualNetworkName'), variables('subnetName'))]",
-      "scriptParameters": "[concat('-clusterName ', parameters('clusterName'), ' -subscriptionId ', subscription().subscriptionId, ' -aadClientId ', parameters('aadClientId'), ' -aadClientSecret ', parameters('aadClientSecret'), ' -aadTenantId ', parameters('aadTenantId'), ' -groupName ', resourceGroup().name, ' -clusterTag ', parameters('clusterTag'), ' -clusterPort ', parameters('clusterPort'), ' -hazelcastVersion ', parameters('hazelcastVersion'), ' -userPassword ', parameters('adminPassword'))]",
+      "scriptParameters": "[concat('-clusterName ', parameters('clusterName'), ' -subscriptionId ', subscription().subscriptionId, ' -aadClientId ', parameters('aadClientId'), ' -aadClientSecret ', parameters('aadClientSecret'), ' -aadTenantId ', parameters('aadTenantId'), ' -groupName ', resourceGroup().name, ' -clusterTag ', parameters('clusterTag'), ' -clusterPort ', parameters('clusterPort'), ' -hazelcastVersion ', parameters('hazelcastVersion'), ' -user ', parameters('adminUsername'),' -userPassword ', parameters('adminPassword'))]",
       "bootstrapFiles": [
           "[concat(parameters('templateBaseUrl'), 'scripts/bootstrap_hazelcast.ps1')]",
           "[concat(parameters('templateBaseUrl'), 'scripts/install_hazelcast.ps1')]",
