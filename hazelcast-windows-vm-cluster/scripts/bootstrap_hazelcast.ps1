@@ -20,7 +20,7 @@ netsh advfirewall firewall add rule name="Hazelcast Member" dir=in action=allow 
 
 $action = New-ScheduledTaskAction -Execute 'Powershell.exe' -Argument '-ExecutionPolicy Unrestricted -Command "cd C:\Temp\hazelcast; mvn exec:java 2>&1 >> "C:\Temp\hazelcast\hazelcast-member.log""'
 $trigger = New-ScheduledTaskTrigger -AtStartup
-Register-ScheduledTask -Action $action -Trigger $trigger -TaskName 'Hazelcast' -User $user -Password $userPassword -Description "Hazelcast Member" -RunLevel Highest
+Register-ScheduledTask -Action $action -Trigger $trigger -TaskName 'Hazelcast' -User "System" -Description "Hazelcast Member" -RunLevel Highest
 (Get-ScheduledTask -TaskName 'Hazelcast').State
 while ((Get-ScheduledTask -TaskName 'Hazelcast').State  -ne 'Ready') {
     Write-Host "Registring scheduled task..."
